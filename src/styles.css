@@ -1,0 +1,108 @@
+body,
+button,
+input,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+}
+
+.hidden {
+  display: none;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+#addHoleBtn {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 2px solid #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+#addHoleBtn:hover {
+  background-color: #333;
+  color: #f8f9fa;
+}
+
+#map {
+  height: calc(100vh - 50px);
+  width: 100%;
+}
+
+header * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#holePopup form {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#holeNumber {
+  -moz-appearance: textfield; /* Removes spinner in Firefox */
+}
+
+#holeNumber::-webkit-inner-spin-button,
+#holeNumber::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Removes spinner in WebKit browsers */
+  margin: 0; /* Removes margin in WebKit browsers */
+}
+
+#holePopup input[type="number"] {
+  width: 20px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Removes spinner for WebKit browsers */
+    margin: 0;
+  }
+}
+
+#holePopup input[type="submit"] {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.8em;
+}
+
+#mainMenuBtn {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 2px solid #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
