@@ -65,11 +65,10 @@ async function checkSession(req: Request, res: Response, next: NextFunction) {
 
 app.use("/map", checkSession);
 
-
 app.use((req, res, next) => {
-  console.log(req.method, req.url); 
-  console.log("Session ID:", req.session.selectedCourse); 
-  next(); 
+  console.log(req.method, req.url);
+  console.log("Session ID:", req.session.selectedCourse);
+  next();
 });
 
 app.get("/courses", async (req: Request, res: Response) => {
@@ -144,10 +143,10 @@ app.get("/course/:name", async (req, res) => {
 });
 
 app.get("/", (req: Request, res: Response) => {
-  if (req.session.selectedCourse) {
-    res.redirect("/map");
-  } else {
+  if (!req.session.selectedCourse) {
     res.redirect("/courses");
+  } else {
+    res.redirect("/map");
   }
 });
 
