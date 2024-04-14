@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     mainMenuButton.addEventListener("click", () => {
       console.log("Ending session");
       courseSessionManager.endSession();
-      window.location.href = "/courses";
+      window.location.href = "/";
     });
   }
 

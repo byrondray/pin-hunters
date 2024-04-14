@@ -45,7 +45,7 @@ async function checkCourseExistence(courseName: string): Promise<boolean> {
 async function checkSession(req: Request, res: Response, next: NextFunction) {
   console.log("session start", req.session.selectedCourse, "session");
   if (req.session.selectedCourse === undefined) {
-    res.redirect("/courses");
+    res.redirect("/");
   } else {
     await checkCourseExistence(req.session.selectedCourse)
       .then((exists) => {
@@ -53,7 +53,7 @@ async function checkSession(req: Request, res: Response, next: NextFunction) {
           next();
         } else {
           req.session.selectedCourse = undefined;
-          res.redirect("/courses");
+          res.redirect("/");
         }
       })
       .catch((err) => {
@@ -71,7 +71,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/courses", async (req: Request, res: Response) => {
+app.get("/", async (req: Request, res: Response) => {
   try {
     const coursesData = await fs.readFile("courses.json", "utf8");
     const courses = JSON.parse(coursesData);
@@ -94,7 +94,7 @@ app.get("/end-session", (req: Request, res: Response) => {
       console.error("Session save error:", err);
       res.status(500).send("Server error");
     } else {
-      res.redirect("/courses");
+      res.redirect("/");
     }
   });
 });
@@ -142,19 +142,11 @@ app.get("/course/:name", async (req, res) => {
   }
 });
 
-app.get("/", (req: Request, res: Response) => {
-  if (!req.session.selectedCourse) {
-    res.redirect("/courses");
-  } else {
-    res.redirect("/map");
-  }
-});
-
 app.get("/map", (req: Request, res: Response) => {
   if (req.session.selectedCourse) {
-    res.sendFile(path.join(__dirname, "dist/index.html"));
+    res.sendFile(path.join(__dirname, "dist/map.html"));
   } else {
-    res.redirect("/courses");
+    res.redirect("/");
   }
 });
 
