@@ -9,7 +9,6 @@ import session from "express-session";
 import { type Course } from "./interfaces/ICourse";
 import { expressExtend, renderToHtml } from "jsxte";
 import { CourseList } from "./views/CourseList";
-import { CLIENT_RENEG_LIMIT } from "tls";
 
 declare module "express-session" {
   interface SessionData {

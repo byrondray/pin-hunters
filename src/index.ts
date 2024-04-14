@@ -102,6 +102,8 @@ document.addEventListener("DOMContentLoaded", async function () {
               hole.lat,
               hole.lng
             );
+            console.log(hole, "hole data");
+            customMap.addHoleMarker(hole, holeNumber);
             alert(
               `Distance to hole ${holeNumber}: ${distance.toFixed(2)} yards`
             );

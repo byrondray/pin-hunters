@@ -664,6 +664,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                 const currentLoc = await currentLocation.getLocation();
                 if (currentLoc) {
                     const distance = distanceCalculator.calculateDistance(currentLoc.lat, currentLoc.long, hole.lat, hole.lng);
+                    console.log(hole, "hole data");
+                    customMap.addHoleMarker(hole, holeNumber);
                     alert(`Distance to hole ${holeNumber}: ${distance.toFixed(2)} yards`);
                     holePopup.style.display = "none";
                     addHoleButton.classList.remove("hidden");
@@ -695,6 +697,7 @@ class CustomizedMap {
             streetViewControl: false,
             mapTypeControl: false
         });
+        this.holeMarkers = new Map();
         this.showCurrentLocation();
     }
     async showCurrentLocation() {
@@ -727,6 +730,36 @@ class CustomizedMap {
     }
     async updateCurrentLocation() {
         await this.showCurrentLocation();
+    }
+    addHoleMarker(hole, holeNumber) {
+        this.holeMarkers.forEach((marker, key)=>{
+            if (key !== holeNumber) {
+                console.log(`Removing marker for hole number: ${key}`);
+                marker.setMap(null);
+                this.holeMarkers.delete(key);
+            }
+        });
+        if (this.holeMarkers.has(holeNumber)) {
+            console.log(`Updating marker for hole number: ${holeNumber}`);
+            this.holeMarkers.get(holeNumber)?.setMap(null);
+        } else console.log(`Adding new marker for hole number: ${holeNumber}`);
+        const marker = new google.maps.Marker({
+            position: {
+                lat: hole.lat,
+                lng: hole.lng
+            },
+            map: this._googleMap,
+            icon: {
+                path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                scale: 5,
+                fillColor: "#FF6347",
+                fillOpacity: 1,
+                strokeWeight: 1,
+                strokeColor: "white"
+            },
+            title: `Par ${hole.par}`
+        });
+        this.holeMarkers.set(holeNumber, marker);
     }
 }
 
