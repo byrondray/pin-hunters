@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     const refreshButton = document.getElementById("refreshLocationBtn");
     const holePopup = document.getElementById("holePopup");
     const holeForm = document.getElementById("holeForm");
-    const logo = document.getElementById("logo");
     if (homeButton) {
         homeButton.addEventListener("click", () => {
             console.log("Ending session");
@@ -81,13 +80,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             addHoleButton.classList.add("hidden");
             holePopup.style.display = "block";
         });
-        if (logo) {
-            logo.addEventListener("click", () => {
-                holePopup.style.display = "none";
-                addHoleButton.classList.remove("hidden");
-                console.log("Popup closed");
-            });
-        }
         holeForm.addEventListener("submit", async (event) => {
             event.preventDefault();
             const holeNumberInput = document.getElementById("holeNumber");
@@ -98,7 +90,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                     const currentLoc = await currentLocation.getLocation();
                     if (currentLoc) {
                         const distance = distanceCalculator.calculateDistance(currentLoc.lat, currentLoc.long, hole.lat, hole.lng);
-                        console.log(hole, "hole data");
                         customMap.addHoleMarker(hole, holeNumber);
                         customMap.centerOnHole(hole);
                         const distanceDisplay = document.getElementById("distanceDisplay");

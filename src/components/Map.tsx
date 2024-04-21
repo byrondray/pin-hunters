@@ -5,17 +5,11 @@ export function MapPage() {
     <Html>
       <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
         <div class="flex-initial">
-          <h1
+          <span
             id="homeButton"
-            class="text-xl font-bold text-white mx-5 cursor-pointer"
+            class="text-xl font-bold text-white mx-2 cursor-pointer"
           >
             Pin Hunters⛳
-          </h1>
-        </div>
-
-        <div class="flex-grow text-center">
-          <span id="distanceDisplay" class="hidden">
-            🚩 Distance: <span id="distanceValue">0</span> yards 🚩
           </span>
         </div>
 
@@ -29,7 +23,7 @@ export function MapPage() {
 
           <button
             id="refreshLocationBtn"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded text-2xl"
           >
             🔄
           </button>
@@ -37,13 +31,10 @@ export function MapPage() {
       </header>
       <div
         id="holePopup"
-        class="hidden absolute top-0 left-0 right-0 bg-white shadow-md p-4"
+        class="hidden absolute inset-x-0 top-0 bg-white shadow-md p-4"
       >
-        <form id="holeForm" class="flex items-center">
-          <h1 id="logo" class="text-xl font-bold text-blue-900 text-center mx-3 cursor-pointer">
-            Pin Hunters⛳
-          </h1>
-          <label for="holeNumber" class="mr-2">
+        <form id="holeForm" class="grid grid-cols-3 gap-3 items-center">
+          <label for="holeNumber" class="col-span-1 text-right mr-2">
             Enter Hole:
           </label>
           <input
@@ -53,15 +44,21 @@ export function MapPage() {
             min="1"
             max="18"
             required
-            class="border-2 border-gray-200 rounded py-2 px-4 mr-2"
+            class="col-span-1 border-2 border-gray-200 rounded py-2 px-4"
           />
           <input
             type="submit"
             value="Calculate"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            class="col-span-1 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           />
         </form>
       </div>
+      <span
+        id="distanceDisplay"
+        class="hidden absolute top-50 left-1/3 -translate-x-1/2 z-50 bg-white bg-opacity-80 py-2 px-4 rounded shadow-md"
+      >
+        Distance: <span id="distanceValue">0</span> yards
+      </span>
       <div id="map" class="w-full h-screen"></div>{" "}
       <script defer type="module" src="/index.js"></script>
       <script
