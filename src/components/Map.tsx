@@ -5,14 +5,18 @@ export function MapPage() {
     <Html>
       <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
         <div class="flex-initial">
-          <h1 class="text-xl font-bold text-white mx-5">Pin Hunters⛳</h1>
+          <h1
+            id="homeButton"
+            class="text-xl font-bold text-white mx-5 cursor-pointer"
+          >
+            Pin Hunters⛳
+          </h1>
         </div>
 
         <div class="flex-grow text-center">
           <span id="distanceDisplay" class="hidden">
-          🚩 Distance: <span id="distanceValue">0</span> yards 🚩
-          </span>{" "}
-          {/* This will be shown in the center */}
+            🚩 Distance: <span id="distanceValue">0</span> yards 🚩
+          </span>
         </div>
 
         <div class="flex space-x-4 flex-initial">
@@ -22,12 +26,7 @@ export function MapPage() {
           >
             Find Distance
           </button>
-          <button
-            id="mainMenuBtn"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Main Menu
-          </button>
+
           <button
             id="refreshLocationBtn"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -41,7 +40,7 @@ export function MapPage() {
         class="hidden absolute top-0 left-0 right-0 bg-white shadow-md p-4"
       >
         <form id="holeForm" class="flex items-center">
-          <h1 class="text-xl font-bold text-blue-900 text-center mx-8">
+          <h1 id="logo" class="text-xl font-bold text-blue-900 text-center mx-3 cursor-pointer">
             Pin Hunters⛳
           </h1>
           <label for="holeNumber" class="mr-2">
@@ -58,7 +57,7 @@ export function MapPage() {
           />
           <input
             type="submit"
-            value="Check Distance"
+            value="Calculate"
             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
           />
         </form>

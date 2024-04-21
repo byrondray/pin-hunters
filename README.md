@@ -17,7 +17,7 @@ To get started with the Golf Distance Tracker, follow these simple steps:
 **1. Clone the repo**
 
 ```bash
-git clone https://github.com/yourusername/golf-distance-tracker.git
+git clone https://github.com/byrondray/pin-hunters.git
 ```
 
 **2. Install the necessary packages**

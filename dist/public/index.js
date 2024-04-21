@@ -52,12 +52,13 @@ async function initMap() {
 document.addEventListener("DOMContentLoaded", async function () {
     await initializeCourseData();
     const addHoleButton = document.getElementById("addHoleBtn");
-    const mainMenuButton = document.getElementById("mainMenuBtn");
+    const homeButton = document.getElementById("homeButton");
     const refreshButton = document.getElementById("refreshLocationBtn");
     const holePopup = document.getElementById("holePopup");
     const holeForm = document.getElementById("holeForm");
-    if (mainMenuButton) {
-        mainMenuButton.addEventListener("click", () => {
+    const logo = document.getElementById("logo");
+    if (homeButton) {
+        homeButton.addEventListener("click", () => {
             console.log("Ending session");
             courseSessionManager.endSession();
             window.location.href = "/";
@@ -80,6 +81,13 @@ document.addEventListener("DOMContentLoaded", async function () {
             addHoleButton.classList.add("hidden");
             holePopup.style.display = "block";
         });
+        if (logo) {
+            logo.addEventListener("click", () => {
+                holePopup.style.display = "none";
+                addHoleButton.classList.remove("hidden");
+                console.log("Popup closed");
+            });
+        }
         holeForm.addEventListener("submit", async (event) => {
             event.preventDefault();
             const holeNumberInput = document.getElementById("holeNumber");
