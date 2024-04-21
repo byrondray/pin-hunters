@@ -92,21 +92,27 @@ document.addEventListener("DOMContentLoaded", async function () {
                         const distance = distanceCalculator.calculateDistance(currentLoc.lat, currentLoc.long, hole.lat, hole.lng);
                         console.log(hole, "hole data");
                         customMap.addHoleMarker(hole, holeNumber);
-                        alert(`Distance to hole ${holeNumber}: ${distance.toFixed(2)} yards`);
+                        customMap.centerOnHole(hole);
+                        const distanceDisplay = document.getElementById("distanceDisplay");
+                        const distanceValue = document.getElementById("distanceValue");
+                        if (distanceDisplay && distanceValue) {
+                            distanceValue.textContent = distance.toFixed(2);
+                            distanceDisplay.classList.remove("hidden");
+                        }
                         holePopup.style.display = "none";
                         addHoleButton.classList.remove("hidden");
                         holeNumberInput.value = "";
                     }
                     else {
-                        alert("Current location is not available.");
+                        console.log("Current location is not available.");
                     }
                 }
                 catch (error) {
-                    alert("Error calculating distance: " + error);
+                    console.error("Error calculating distance:", error);
                 }
             }
             else {
-                alert("Invalid hole number.");
+                console.log("Invalid hole number.");
             }
         });
     }

@@ -3,8 +3,19 @@ import { Html } from "./Html";
 export function MapPage() {
   return (
     <Html>
-      <header class="bg-gray-800 text-white p-4">
-        <div class="container mx-auto flex justify-between items-center">
+      <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+        <div class="flex-initial">
+          <h1 class="text-xl font-bold text-white mx-5">Pin Hunters⛳</h1>
+        </div>
+
+        <div class="flex-grow text-center">
+          <span id="distanceDisplay" class="hidden">
+          🚩 Distance: <span id="distanceValue">0</span> yards 🚩
+          </span>{" "}
+          {/* This will be shown in the center */}
+        </div>
+
+        <div class="flex space-x-4 flex-initial">
           <button
             id="addHoleBtn"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -29,7 +40,10 @@ export function MapPage() {
         id="holePopup"
         class="hidden absolute top-0 left-0 right-0 bg-white shadow-md p-4"
       >
-        <form id="holeForm" class="flex justify-between items-center">
+        <form id="holeForm" class="flex items-center">
+          <h1 class="text-xl font-bold text-blue-900 text-center mx-8">
+            Pin Hunters⛳
+          </h1>
           <label for="holeNumber" class="mr-2">
             Enter Hole:
           </label>

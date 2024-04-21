@@ -73,5 +73,9 @@ export class CustomizedMap {
         });
         this.holeMarkers.set(holeNumber, marker);
     }
+    centerOnHole(hole) {
+        const center = new google.maps.LatLng(hole.lat, hole.lng);
+        this._googleMap.panTo(center);
+    }
 }
 //# sourceMappingURL=customizeMap.js.map
