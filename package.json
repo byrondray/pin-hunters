@@ -7,9 +7,10 @@
     "build:ts": "tsc -p .",
     "watch:ts": "tsc -p . -w",
     "start": "bun run dist/server.js",
-    "dev": "concurrently \"npm run watch:ts\" \"npm run start\"",
+    "dev": "concurrently \"bun run watch:ts\" \"bun run start\"",
     "build:db": "bunx drizzle-kit push:sqlite",
-    "seed:db": "bun run src/database/seed.ts"
+    "seed:db": "bun run src/database/seed.ts",
+    "dev:db": "turso dev --db-file dev.db"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,6 @@
     "express-session": "^1.18.0",
     "jsxte": "^3.3.1",
     "libsql": "^0.3.16",
-    "parcel": "^2.12.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   },
