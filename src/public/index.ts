@@ -1,8 +1,8 @@
-import { CustomizedMap } from "./customizeMap";
-import { CurrentLocation } from "./location";
-import { Course } from "./course";
-import { CourseSessionManager } from "./api";
-import { DistanceCalculator } from "./distanceCalculator";
+import { CustomizedMap } from "./customizeMap.js";
+import { CurrentLocation } from "./location.js";
+import { Course } from "./course.js";
+import { CourseSessionManager } from "./api.js";
+import { DistanceCalculator } from "./distanceCalculator.js";
 
 const currentLocation = new CurrentLocation();
 const distanceCalculator = new DistanceCalculator();

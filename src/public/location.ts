@@ -9,21 +9,21 @@ export class CurrentLocation {
     return new Promise((resolve, reject) => {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
-          position => {
+          (position) => {
             this._location = {
               lat: position.coords.latitude,
-              long: position.coords.longitude
+              long: position.coords.longitude,
             };
             resolve(this._location);
           },
-          error => {
+          (error) => {
             console.error(`Error occurred. Error code: ${error.code}`);
             reject(error);
           },
           {
             enableHighAccuracy: true,
             timeout: 5000,
-            maximumAge: 0
+            maximumAge: 0,
           }
         );
       } else {
@@ -34,6 +34,8 @@ export class CurrentLocation {
   }
 
   public getLocation(): Promise<{ lat: number; long: number } | null> {
-    return this._location ? Promise.resolve(this._location) : this.fetchLocation();
+    return this._location
+      ? Promise.resolve(this._location)
+      : this.fetchLocation();
   }
 }

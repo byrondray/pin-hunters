@@ -35,7 +35,4 @@ export class Course {
     }
     this.holes = holes;
   }
-
- 
 }
-

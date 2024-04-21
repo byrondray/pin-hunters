@@ -5,10 +5,15 @@ import express, {
 } from "express";
 import path from "path";
 import { promises as fs } from "fs";
+import type { Course } from "./interfaces/ICourse";
 import session from "express-session";
-import { type Course } from "./interfaces/ICourse";
 import { expressExtend, renderToHtml } from "jsxte";
-import { CourseList } from "./views/CourseList";
+import { CourseList } from "./components/CourseList";
+import { MapPage } from "./components/Map";
+import { db } from "./database/client";
+import { course } from "./database/schema/schema";
+
+import "dotenv/config";
 
 declare module "express-session" {
   interface SessionData {
@@ -21,11 +26,32 @@ const port = process.env.PORT || 3000;
 const app = express();
 expressExtend(app);
 
-app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, "dist")));
-app.use(express.static(path.join(__dirname, "public")));
+app.use((req, res, next) => {
+  console.log("Database URL:", process.env.DATABASE_URL);
+
+  if (req.method === "GET") {
+    console.log("Static file request:", req.path);
+  }
+
+  const fetchCourses = async () => {
+    try {
+      const courses = await db.select().from(course);
+      console.log("Courses retrieved:", courses);
+    } catch (error) {
+      console.error("Error retrieving courses:", error);
+    }
+  };
+
+  // Call the async function to fetch and log courses
+  fetchCourses();
+
+  // Proceed to the next middleware function
+  next();
+});
+
+app.use(express.static(path.join(__dirname, "/public")));
 
 app.use(
   session({
@@ -72,10 +98,11 @@ app.use((req, res, next) => {
 
 app.get("/", async (req: Request, res: Response) => {
   try {
-    const coursesData = await fs.readFile("courses.json", "utf8");
-    const courses = JSON.parse(coursesData);
+    const coursesData = await db.select().from(course);
+    console.log("Courses:", coursesData);
 
-    const courseNames = courses.map((course: Course) => course.name);
+    const courseNames = coursesData.map((course) => course.name);
+    console.log("Courses:", courseNames);
 
     const html = renderToHtml(<CourseList courseNames={courseNames} />);
 
@@ -142,10 +169,20 @@ app.get("/course/:name", async (req, res) => {
 });
 
 app.get("/map", (req: Request, res: Response) => {
-  if (req.session.selectedCourse) {
-    res.sendFile(path.join(__dirname, "dist/map.html"));
-  } else {
-    res.redirect("/");
+  try {
+    if (req.session.selectedCourse) {
+      console.log(
+        "Rendering MapPage with selected course:",
+        req.session.selectedCourse
+      );
+      const html = renderToHtml(<MapPage />);
+      res.send(html);
+    } else {
+      res.redirect("/");
+    }
+  } catch (error) {
+    console.error("Error occurred when trying to render /map:", error);
+    res.status(500).send("Server error");
   }
 });
 

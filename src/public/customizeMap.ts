@@ -1,5 +1,5 @@
-import { CurrentLocation } from "./location";
-import { type Hole } from "../interfaces/ICourse";
+import { CurrentLocation } from "./location.js";
+import { type Hole } from "../interfaces/ICourse.js";
 
 export class CustomizedMap {
   private _googleMap: google.maps.Map;
