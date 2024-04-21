@@ -7,7 +7,7 @@ import { expressExtend, renderToHtml } from "jsxte";
 import { CourseList } from "./components/CourseList";
 import { MapPage } from "./components/Map";
 import { db } from "./database/client";
-import { course } from "./database/schema/schema";
+import { course, hole } from "./database/schema/schema";
 import { checkSession } from "./middleware/express.middleware";
 import { eq } from "drizzle-orm";
 import "dotenv/config";
@@ -74,7 +74,6 @@ app.post("/select-course", async (req, res) => {
       .select()
       .from(course)
       .where(eq(course.name, selectedCourseName));
-
     if (selectedCourse.length > 0) {
       req.session.selectedCourse = selectedCourse[0].name;
       req.session.save((err) => {
@@ -103,8 +102,20 @@ app.get("/course/:name", async (req, res) => {
       .from(course)
       .where(eq(course.name, courseName));
 
-    if (selectedCourse) {
-      res.json(selectedCourse);
+    if (selectedCourse.length > 0) {
+      console.log(selectedCourse[0], "selectedCourse");
+
+      const holes = await db
+        .select()
+        .from(hole)
+        .where(eq(hole.courseId, selectedCourse[0].id));
+
+      const courseWithHoles = {
+        ...selectedCourse[0],
+        holes: holes,
+      };
+      console.log(courseWithHoles, "courseWithHoles");
+      res.json(courseWithHoles);
     } else {
       res.status(404).send("Course not found");
     }
