@@ -1,33 +1,55 @@
 import { jsx as _jsx } from "jsxte/jsx-runtime";
 import express from "express";
 import path from "path";
-import session from "express-session";
 import { expressExtend, renderToHtml } from "jsxte";
 import { CourseList } from "./components/CourseList";
 import { MapPage } from "./components/Map";
 import { db } from "./database/client";
 import { course, hole } from "./database/schema/schema";
-import { checkSession } from "./middleware/express.middleware";
-import { eq } from "drizzle-orm";
+import { eq, sum } from "drizzle-orm";
+import liveReload from "livereload";
 import "dotenv/config";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { configureApp } from "./middleware/express.middleware";
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const port = process.env.PORT || 3000;
 const app = express();
+configureApp(app);
 expressExtend(app);
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "/public")));
-app.use(session({
-    secret: "pin_hunters",
-    resave: false,
-    saveUninitialized: true,
-}));
-app.use("/map", checkSession);
+const liveReloadServer = liveReload.createServer();
+liveReloadServer.watch(path.join(__dirname));
+liveReloadServer.server.once("connection", () => {
+    setTimeout(() => {
+        liveReloadServer.refresh("/");
+    }, 0);
+});
+// app.get("/", async (req: Request, res: Response) => {
+//   try {
+//     const coursesData = await db.select().from(course);
+//     console.log("Courses:", coursesData);
+//     const courseNames = coursesData.map((course) => course.name);
+//     console.log("Courses:", courseNames);
+//     const html = renderToHtml(<CourseList courseNames={courseNames} />);
+//     res.send(html);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Server error");
+//   }
+// });
 app.get("/", async (req, res) => {
     try {
-        const coursesData = await db.select().from(course);
-        console.log("Courses:", coursesData);
-        const courseNames = coursesData.map((course) => course.name);
-        console.log("Courses:", courseNames);
-        const html = renderToHtml(_jsx(CourseList, { courseNames: courseNames }));
+        const coursesData = await db
+            .select({
+            name: course.name,
+            totalPar: sum(hole.par),
+        })
+            .from(course)
+            .leftJoin(hole, hole.courseId, course.id)
+            .groupBy(course.id)
+            .execute();
+        console.log("Courses with pars:", coursesData);
+        const html = renderToHtml(_jsx(CourseList, { courses: coursesData }));
         res.send(html);
     }
     catch (error) {
@@ -123,10 +145,6 @@ app.get("/map", (req, res) => {
         console.error("Error occurred when trying to render /map:", error);
         res.status(500).send("Server error");
     }
-});
-app.use((err, req, res) => {
-    console.error(err.stack);
-    res.status(500).send("Something broke!");
 });
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

@@ -1,30 +1,40 @@
-import { Html } from "./Html";
+import { Html } from './Html';
 
-export function CourseList({ courseNames }: { courseNames: string[] }) {
-  const serializedCourseNames = JSON.stringify(courseNames);
+type Course = {
+  name: string;
+  totalPar: number;
+};
+
+type CourseListProps = {
+  courses: Course[];
+};
+
+export function CourseList({ courses }: CourseListProps) {
+  const serializedCourseNames = JSON.stringify(courses);
   return (
     <Html>
-      <div class="min-h-screen bg-gradient-to-b from-blue-200 via-blue-300 to-blue-400">
-        <nav class="bg-blue-900 p-4 flex justify-between items-center">
-          <h1 class="text-xl font-bold text-white">Pin Hunters⛳</h1>
+      <div class='min-h-screen bg-gradient-to-b from-blue-200 via-blue-300 to-blue-400'>
+        <nav class='bg-blue-900 p-4 flex justify-between items-center'>
+          <h1 class='text-xl font-bold text-white'>Pin Hunters⛳</h1>
           <input
-            type="text"
-            oninput="filterCourses(event)"
-            placeholder="Search courses"
-            class="p-2 rounded"
+            id='courseFilterInput'
+            type='text'
+            oninput='filterCourses(event)'
+            placeholder='Search courses'
+            class='p-2 rounded'
           />
         </nav>
-        <div class="container mx-auto p-4">
-          <ul id="coursesContainer" class="mt-10 space-y-4">
-            {courseNames.map((name) => (
-              <li class="list-none">
-                <form action="/select-course" method="post">
-                  <input type="hidden" name="courseName" value={name} />
+        <div class='container mx-auto p-4'>
+          <ul id='coursesContainer' class='mt-10 space-y-4'>
+            {courses.map((course) => (
+              <li class='list-none'>
+                <form action='/select-course' method='post'>
+                  <input type='hidden' name='courseName' value={course.name} />
                   <button
-                    type="submit"
-                    class="bg-white text-blue-900 hover:bg-blue-100 font-semibold py-2 px-4 border border-blue-200 rounded shadow"
+                    type='submit'
+                    class='bg-white text-blue-900 hover:bg-blue-100 font-semibold py-2 px-4 border border-blue-200 rounded shadow'
                   >
-                    {name}
+                    {course.name} - Total Par: {course.totalPar}
                   </button>
                 </form>
               </li>

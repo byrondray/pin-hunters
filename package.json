@@ -6,7 +6,7 @@
   "scripts": {
     "build:ts": "tsc -p .",
     "watch:ts": "tsc -p . -w",
-    "start": "bun run dist/server.js",
+    "start": "bun --watch run dist/server.js",
     "dev": "concurrently \"bun run watch:ts\" \"bun run start\"",
     "build:db": "bunx drizzle-kit push:sqlite",
     "seed:db": "bun run src/database/seed.ts",
@@ -17,13 +17,17 @@
   "license": "ISC",
   "dependencies": {
     "@libsql/client": "^0.6.0",
+    "@types/connect-livereload": "^0.6.3",
+    "@types/livereload": "^0.9.5",
     "concurrently": "^8.2.2",
+    "connect-livereload": "^0.6.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.8",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jsxte": "^3.3.1",
     "libsql": "^0.3.16",
+    "livereload": "^0.9.3",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   },

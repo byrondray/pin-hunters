@@ -25,7 +25,7 @@ export function MapPage() {
             id="refreshLocationBtn"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded text-2xl"
           >
-            🔄
+            📍
           </button>
         </div>
       </header>

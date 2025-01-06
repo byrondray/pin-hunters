@@ -34,7 +34,9 @@ async function seedDatabase() {
             lat: holeData.lat,
             lng: holeData.lng,
           });
-          console.log(`Inserted hole number ${holeData.number} for course ID ${courseId}.`);
+          console.log(
+            `Inserted hole number ${holeData.number} for course ID ${courseId}.`
+          );
         }
       }
     });
